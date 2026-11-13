@@ -7,14 +7,16 @@ FROM alpine:latest
 WORKDIR /app
 COPY --from=builder /mhgurecomp-hubserver .
 
-# Copiamos el binario playit de la raíz de GitHub
+# Copiamos el binario playit de la raíz
 COPY playit .
 RUN chmod +x playit && apk add --no-cache libc6-compat
 
-# Script de inicio ultra robusto que arranca Go y Playit inyectando la llave por argumento
+# Script de inicio definitivo utilizando el Secret File de Render
 RUN echo '#!/bin/sh' > /app/start.sh && \
+    echo 'mkdir -p /root/.config/playit_gg' >> /app/start.sh && \
+    echo 'cp /etc/secrets/playit.toml /root/.config/playit_gg/playit.toml' >> /app/start.sh && \
     echo './mhgurecomp-hubserver -addr :10555 &' >> /app/start.sh && \
-    echo './playit $SECRET_KEY run' >> /app/start.sh && \
+    echo './playit run' >> /app/start.sh && \
     chmod +x /app/start.sh
 
 EXPOSE 10555/tcp 10555/udp
