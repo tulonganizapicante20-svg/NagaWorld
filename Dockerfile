@@ -15,9 +15,9 @@ RUN chmod +x playit && apk add --no-cache libc6-compat
 RUN echo '#!/bin/sh' > /app/start.sh && \
     echo 'mkdir -p /root/.config/playit_gg' >> /app/start.sh && \
     echo 'cp /etc/secrets/playit.toml /root/.config/playit_gg/playit.toml' >> /app/start.sh && \
-    echo './mhgurecomp-hubserver -addr :10555 &' >> /app/start.sh && \
+    echo './mhgurecomp-hubserver -addr :36286 &' >> /app/start.sh && \
     echo './playit' >> /app/start.sh && \
     chmod +x /app/start.sh
 
-EXPOSE 10555/tcp 10555/udp
+EXPOSE 36286/tcp 36286/udp
 ENTRYPOINT ["/app/start.sh"]
