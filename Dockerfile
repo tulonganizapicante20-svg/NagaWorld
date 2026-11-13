@@ -13,9 +13,9 @@ RUN curl -Lo playit https://github.com/playit-cloud/playit-agent/releases/downlo
 
 # Creamos el script de inicio para ambos procesos
 RUN echo '#!/bin/sh' > /app/start.sh && \
-    echo './mhgurecomp-hubserver -addr :101316 &' >> /app/start.sh && \
+    echo './mhgurecomp-hubserver -addr :10555 &' >> /app/start.sh && \
     echo './playit run' >> /app/start.sh && \
     chmod +x /app/start.sh
 
-EXPOSE 101316/tcp 101316/udp
+EXPOSE 10555/tcp 10555/udp
 ENTRYPOINT ["/app/start.sh"]
