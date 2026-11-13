@@ -11,10 +11,10 @@ COPY --from=builder /mhgurecomp-hubserver .
 COPY playit .
 RUN chmod +x playit && apk add --no-cache libc6-compat
 
-# Script de inicio actualizado para inicializar playit correctamente
+# Script de inicio para el puerto 10555 y playit
 RUN echo '#!/bin/sh' > /app/start.sh && \
     echo './mhgurecomp-hubserver -addr :10555 &' >> /app/start.sh && \
-    echo './playit' >> /app/start.sh && \
+    echo './playit run' >> /app/start.sh && \
     chmod +x /app/start.sh
 
 EXPOSE 10555/tcp 10555/udp
